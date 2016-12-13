@@ -52,8 +52,8 @@ def is_get_request(query):
 
 def install():
     import leancloud
-    if leancloud.__version__ < '1.8.0':
-        raise RuntimeError('TODO')
+    if [int(x) for x in leancloud.__version__.split('.')] < [1, 9, 0]:
+        raise RuntimeError('apm works only with leancloud-sdk which version is equal or above 1.9.0')
     aggregator = Aggregator('cloudApi', 60)
     leancloud.client.request_hooks['response'] = make_request_hook(aggregator)
     aggregator.start()

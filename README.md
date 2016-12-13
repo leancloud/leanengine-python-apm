@@ -14,7 +14,7 @@ git+https://github.com/aisk/leanengine-python-apm.git@master#egg=leanengine-apm
 
 部署到云引擎即可自动安装 `leanengine-python-apm`。本地开发可使用 `$ pip install -Ur requirements.txt` 来安装依赖。
 
-> **注意**：目前 `leanengine-python-apm` 依赖 `leancloud-sdk` 版本 > 1.8.1。
+> **注意**：目前 `leanengine-python-apm` 依赖 `leancloud-sdk` 版本 > 1.9.0。
 
 ### 初始化
 

@@ -26,8 +26,8 @@ class FlaskMiddleware(object):
         if not isinstance(app, flask.Flask):
             raise RuntimeError('FlaskMiddleware must accept flask app as first parameter')
         import leancloud
-        if leancloud.__version__ < '1.8.0':
-            raise RuntimeError('TODO')
+        if [int(x) for x in leancloud.__version__.split('.')] < [1, 9, 0]:
+            raise RuntimeError('apm works only with leancloud-sdk which version is equal or above 1.9.0')
         self.aggregator = Aggregator('request', 60)
         self.aggregator.start()
 
@@ -46,8 +46,10 @@ class FlaskMiddleware(object):
             matched = re.findall('.*\.(css|js|jpe?g|gif|png|woff2?|ico)$', request.path)
             if request.method == 'GET' and matched:
                 url = 'GET *.%s' % matched[0]
-            else:
+            elif url_rule:
                 url = '%s %s' % (request.method, url_rule)
+            else:
+                url = '%s %s' % (request.method, request.path)
             data = {
                 'count': 1,
                 'responseTime': elapsed.total_seconds() * 1000,
